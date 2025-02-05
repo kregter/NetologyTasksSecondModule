@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <windows.h>
 
-enum Months {
+enum class Months {
 	January = 1,
 	February,
 	March,
@@ -17,7 +17,7 @@ enum Months {
 	December
 };
 
-void PrintMonth(int Month);
+void PrintMonth(Months Month);
 
 struct BankAccount {
 	int AccountNumber;
@@ -57,11 +57,13 @@ int main()
 	std::cout << "Введите номер месяца: ";
 	int Month;
 	std::cin >> Month;
+	Months MonthEnum = static_cast<Months>(Month);
 	while (Month != 0)
 	{
-		PrintMonth(Month);
+		PrintMonth(MonthEnum);
 		std::cout << "Введите номер месяца" << std::endl;
 		std::cin >> Month;
+		MonthEnum = static_cast<Months>(Month);
 	}
 	std::cout << "До свидания" << std::endl;
 
@@ -92,43 +94,43 @@ int main()
 }
 
 
-void PrintMonth(int Month) {
+void PrintMonth(Months Month) {
 
 	switch (Month) {
-	case 1:
+	case Months::January:
 		std::cout << "Январь" << std::endl;
 		break;
-	case 2:
+	case Months::February:
 		std::cout << "Февраль" << std::endl;
 		break;
-	case 3:
+	case Months::March:
 		std::cout << "Март" << std::endl;
 		break;
-	case 4:
+	case Months::April:
 		std::cout << "Апрель" << std::endl;
 		break;
-	case 5:
+	case Months::May:
 		std::cout << "Май" << std::endl;
 		break;
-	case 6:
+	case Months::June:
 		std::cout << "Июнь" << std::endl;
 		break;
-	case 7:
+	case Months::July:
 		std::cout << "Июль" << std::endl;
 		break;
-	case 8:
+	case Months::August:
 		std::cout << "Август" << std::endl;
 		break;
-	case 9:
+	case Months::September:
 		std::cout << "Сентябрь" << std::endl;
 		break;
-	case 10:
+	case Months::October:
 		std::cout << "Октябрь" << std::endl;
 		break;
-	case 11:
+	case Months::November:
 		std::cout << "Ноябрь" << std::endl;
 		break;
-	case 12:
+	case Months::December:
 		std::cout << "Декабрь" << std::endl;
 		break;
 	default:
