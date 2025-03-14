@@ -14,19 +14,18 @@ public:
 	Figure() {
 		sides = 0;
 		name = "Figure";
-		check_corr();
 	}
 
 	virtual void print() {
 		std::cout << name << std::endl;
-		if (correct_fig) std::cout << "Correct" << std::endl;
+		if (check_corr()) std::cout << "Correct" << std::endl;
 		else std::cout << "Wrong" << std::endl;
 		std::cout << "Sides quantity: " << sides << std::endl;
 	}
 
-	virtual void check_corr() {
-		if (sides == 0) correct_fig = true;
-		else correct_fig = false;
+	virtual bool check_corr() {
+		if (sides == 0) return true;
+		else return false;
 	}
 };
 
@@ -48,21 +47,20 @@ public:
 		this->A = A;
 		this->B = B;
 		this->C = C;
-		check_corr();
 	}
 
 	void print() {
 		std::cout << name << std::endl;
-		if (correct_fig) std::cout << "Correct" << std::endl;
+		if (check_corr()) std::cout << "Correct" << std::endl;
 		else std::cout << "Wrong" << std::endl;
 		std::cout << "Sides quantity: " << sides << std::endl;
 		std::cout << "Sides: a = " << a << " b = " << b << " c = " << c << std::endl;
 		std::cout << "Angles: A = " << A << " B = " << B << " C = " << C << std::endl;
 	}
 
-	void check_corr() {
-		if ((sides == 3) && ((A+B+C) == 180)) correct_fig = true;
-		else correct_fig = false;
+	bool check_corr() {
+		if ((sides == 3) && ((A+B+C) == 180)) return true;
+		else return false;
 	}
 
 protected:
@@ -90,21 +88,20 @@ public:
 		this->B = B;
 		this->C = C;
 		this->D = D;
-		check_corr();
 	}
 
 	void print() {
 		std::cout << name << std::endl;
-		if (correct_fig) std::cout << "Correct" << std::endl;
+		if (check_corr()) std::cout << "Correct" << std::endl;
 		else std::cout << "Wrong" << std::endl;
 		std::cout << "Sides quantity: " << sides << std::endl;
 		std::cout << "Sides: a = " << a << " b = " << b << " c = " << c << " d = " << d << std::endl;
 		std::cout << "Angles: A = " << A << " B = " << B << " C = " << C << " D = " << D << std::endl;
 	}
 	
-	void check_corr() {
-		if ((sides == 4) && ((A + B + C + D) == 360)) correct_fig = true;
-		else correct_fig = false;
+	bool check_corr() {
+		if ((sides == 4) && ((A + B + C + D) == 360)) return true;
+		else return false;
 	}
 
 protected:
@@ -116,12 +113,20 @@ class RightAnglTriangle : public Triangle {
 public: 
 	RightAnglTriangle(int a, int b, int c, int A, int B) : Triangle(a, b, c, A, B, 90) {
 		name = "Right-angled triangle";
-		check_corr();
 	}
 
-	void check_corr() {
-		if (C == 90) correct_fig &= true;
-		else correct_fig &= false;
+	void print() {
+		std::cout << name << std::endl;
+		if (check_corr() && Triangle::check_corr()) std::cout << "Correct" << std::endl;
+		else std::cout << "Wrong" << std::endl;
+		std::cout << "Sides quantity: " << sides << std::endl;
+		std::cout << "Sides: a = " << a << " b = " << b << " c = " << c << std::endl;
+		std::cout << "Angles: A = " << A << " B = " << B << " C = " << C << std::endl;
+	}
+
+	bool check_corr() {
+		if (C == 90) return true;
+		else return false;
 	}
 
 };
@@ -130,11 +135,20 @@ class IsoscelesTriangle : public Triangle {
 public: 
 	IsoscelesTriangle(int a, int b, int A, int B) : Triangle(a, b, a, A, B, A) {
 		name = "Isosceles triangle";
-		check_corr();
 	}
-	void check_corr() {
-		if (a == c && A == C) correct_fig &= true;
-		else correct_fig &= false;
+
+	void print() {
+		std::cout << name << std::endl;
+		if (check_corr() && Triangle::check_corr()) std::cout << "Correct" << std::endl;
+		else std::cout << "Wrong" << std::endl;
+		std::cout << "Sides quantity: " << sides << std::endl;
+		std::cout << "Sides: a = " << a << " b = " << b << " c = " << c << std::endl;
+		std::cout << "Angles: A = " << A << " B = " << B << " C = " << C << std::endl;
+	}
+
+	bool check_corr() {
+		if (a == c && A == C) return true;
+		else return false;
 	}
 };
 
@@ -142,11 +156,20 @@ class EquilateralTriangle : public Triangle {
 public:
 	EquilateralTriangle(int a) : Triangle(a, a, a, 60, 60, 60) {
 		name = "Equilateral triangle";
-		check_corr();
 	}
-	void check_corr() {
-		if (a == b && b == c && A == 60 && B == 60 && C == 60) correct_fig &= true;
-		else correct_fig &= false;
+
+	void print() {
+		std::cout << name << std::endl;
+		if (check_corr() && Triangle::check_corr()) std::cout << "Correct" << std::endl;
+		else std::cout << "Wrong" << std::endl;
+		std::cout << "Sides quantity: " << sides << std::endl;
+		std::cout << "Sides: a = " << a << " b = " << b << " c = " << c << std::endl;
+		std::cout << "Angles: A = " << A << " B = " << B << " C = " << C << std::endl;
+	}
+
+	bool check_corr() {
+		if (a == b && b == c && A == 60 && B == 60 && C == 60) return true;
+		else return false;
 	}
 };
 
@@ -154,11 +177,20 @@ class RectangleM : public Quadangle {
 public:
 	RectangleM(int a, int b) : Quadangle(a, b, a, b, 90, 90, 90, 90) {
 		name = "Rectangle";
-		check_corr();
 	}
-	void check_corr() {
-		if (a == c && b == d && A == 90 && B == 90 && C == 90 && D ==90) correct_fig &= true;
-		else correct_fig &= false;
+
+	void print() {
+		std::cout << name << std::endl;
+		if (check_corr() && Quadangle::check_corr()) std::cout << "Correct" << std::endl;
+		else std::cout << "Wrong" << std::endl;
+		std::cout << "Sides quantity: " << sides << std::endl;
+		std::cout << "Sides: a = " << a << " b = " << b << " c = " << c << " d = " << d << std::endl;
+		std::cout << "Angles: A = " << A << " B = " << B << " C = " << C << " D = " << D << std::endl;
+	}
+
+	bool check_corr() {
+		if (a == c && b == d && A == 90 && B == 90 && C == 90 && D ==90) return true;
+		else return false;
 	}
 };
 
@@ -166,11 +198,20 @@ class Square : public Quadangle {
 public:
 	Square(int a) : Quadangle(a, a, a, a, 90, 90, 90, 90) {
 		name = "Square";
-		check_corr();
 	}
-	void check_corr() {
-		if (a == c && b == d && a == b && A == 90 && B == 90 && C == 90 && D == 90) correct_fig &= true;
-		else correct_fig &= false;
+
+	void print() {
+		std::cout << name << std::endl;
+		if (check_corr() && Quadangle::check_corr()) std::cout << "Correct" << std::endl;
+		else std::cout << "Wrong" << std::endl;
+		std::cout << "Sides quantity: " << sides << std::endl;
+		std::cout << "Sides: a = " << a << " b = " << b << " c = " << c << " d = " << d << std::endl;
+		std::cout << "Angles: A = " << A << " B = " << B << " C = " << C << " D = " << D << std::endl;
+	}
+
+	bool check_corr() {
+		if (a == c && b == d && a == b && A == 90 && B == 90 && C == 90 && D == 90) return true;
+		else return false;
 	}
 };
 
@@ -178,11 +219,20 @@ class Parallelogram : public Quadangle {
 public:
 	Parallelogram(int a, int b, int A, int B) : Quadangle(a, b, a, b, A, B, A, B) {
 		name = "Parallelogram";
-		check_corr();
 	}
-	void check_corr() {
-		if (a == c && b == d && A == C && B == D) correct_fig &= true;
-		else correct_fig &= false;
+
+	void print() {
+		std::cout << name << std::endl;
+		if (check_corr() && Quadangle::check_corr()) std::cout << "Correct" << std::endl;
+		else std::cout << "Wrong" << std::endl;
+		std::cout << "Sides quantity: " << sides << std::endl;
+		std::cout << "Sides: a = " << a << " b = " << b << " c = " << c << " d = " << d << std::endl;
+		std::cout << "Angles: A = " << A << " B = " << B << " C = " << C << " D = " << D << std::endl;
+	}
+
+	bool check_corr() {
+		if (a == c && b == d && A == C && B == D) return true;
+		else return false;
 	}
 };
 
@@ -190,11 +240,20 @@ class Rhomb : public Quadangle {
 public:
 	Rhomb(int a, int A, int B) : Quadangle(a, a, a, a, A, B, A, B) {
 		name = "Rhomb";
-		check_corr();
 	}
-	void check_corr() {
-		if (a == c && b == d && a == b && A == C && B == D) correct_fig &= true;
-		else correct_fig &= false;
+
+	void print() {
+		std::cout << name << std::endl;
+		if (check_corr() && Quadangle::check_corr()) std::cout << "Correct" << std::endl;
+		else std::cout << "Wrong" << std::endl;
+		std::cout << "Sides quantity: " << sides << std::endl;
+		std::cout << "Sides: a = " << a << " b = " << b << " c = " << c << " d = " << d << std::endl;
+		std::cout << "Angles: A = " << A << " B = " << B << " C = " << C << " D = " << D << std::endl;
+	}
+
+	bool check_corr() {
+		if (a == c && b == d && a == b && A == C && B == D) return true;
+		else return false;
 	}
 };
 
