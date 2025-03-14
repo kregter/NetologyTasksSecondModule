@@ -32,29 +32,21 @@ private:
 	int apart_number;
 };
 
-void sort_addresses(Address** addresses, int number_of_addr) {
+void sort_addresses(Address* addresses, int number_of_addr) {
 	for (int i = 0; i < number_of_addr; i++)
 	{
 		for (int j = number_of_addr - 1; j > 0; j--)
 		{
-			if (addresses[j][0].get_full_address() > addresses[j - 1][0].get_full_address())
+			if (addresses[j].get_full_address() > addresses[j - 1].get_full_address())
 			{
-				Address a = addresses[j][0];
-				addresses[j][0] = addresses[j - 1][0];
-				addresses[j - 1][0] = a;
+				Address a = addresses[j];
+				addresses[j] = addresses[j - 1];
+				addresses[j - 1] = a;
 			}
 		}
 	}
 }
 
-void delete_two_dim_array(Address** arr, int number_of_addr)
-{
-	for (int i = 0; i < number_of_addr; i++)
-	{
-		delete[] arr[i];
-	}
-	delete[] arr;
-}
 
 int main()
 {
@@ -70,11 +62,7 @@ int main()
 		int number_of_addr;
 		std::ifstream fin("in.txt");
 		fin >> number_of_addr;
-		Address** arr = new Address*[number_of_addr];
-		for (int i = 0; i < number_of_addr; i++)
-		{
-			arr[i] = new Address[1];
-		}
+		Address* arr = new Address[number_of_addr];
 
 		for (int i = 0; i < number_of_addr; i++) {
 			std::string city_name;
@@ -85,17 +73,16 @@ int main()
 			fin >> house_number;
 			int apart_number;
 			fin >> apart_number;
-			Address new_addr(city_name, street_name, house_number, apart_number);
-			arr[i][0] = new_addr;
+			arr[i] = Address(city_name, street_name, house_number, apart_number);
 		}
 
 		std::ofstream fout("out.txt");
 		fout << number_of_addr << std::endl;
 		for (int i = number_of_addr - 1; i >= 0; --i) {
-			fout << arr[i][0].get_full_address() << std::endl;
+			fout << arr[i].get_full_address() << std::endl;
 		}
 
-		delete_two_dim_array(arr, number_of_addr);
+		delete[] arr;
 	}
 
 	//task 2.3.2
@@ -103,11 +90,7 @@ int main()
 		int number_of_addr;
 		std::ifstream fin("in.txt");
 		fin >> number_of_addr;
-		Address** arr = new Address * [number_of_addr];
-		for (int i = 0; i < number_of_addr; i++)
-		{
-			arr[i] = new Address[1];
-		}
+		Address* arr = new Address [number_of_addr];
 
 		for (int i = 0; i < number_of_addr; i++) {
 			std::string city_name;
@@ -118,8 +101,7 @@ int main()
 			fin >> house_number;
 			int apart_number;
 			fin >> apart_number;
-			Address new_addr(city_name, street_name, house_number, apart_number);
-			arr[i][0] = new_addr;
+			arr[i] = Address(city_name, street_name, house_number, apart_number);
 		}
 
 		sort_addresses(arr, number_of_addr);
@@ -127,10 +109,10 @@ int main()
 		std::ofstream fout("out.txt");
 		fout << number_of_addr << std::endl;
 		for (int i = number_of_addr - 1; i >= 0; --i) {
-			fout << arr[i][0].get_full_address() << std::endl;
+			fout << arr[i].get_full_address() << std::endl;
 		}
 
-		delete_two_dim_array(arr, number_of_addr);
+		delete[] arr;
 	}
 	else {
 		std::cout << "¬веден неправильный номер задани€" << std::endl;
